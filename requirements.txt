@@ -1,0 +1,14 @@
+datasets
+openai
+sentencepiece
+torch
+joblib
+transformers
+protobuf
+numpy
+torch
+pandas
+scikit-learn
+Flask==3.0.3
+Flask-Cors==4.0.1
+Flask-RESTful==0.3.10
