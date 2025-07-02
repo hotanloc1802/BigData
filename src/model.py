@@ -9,7 +9,7 @@ from pyvi import ViTokenizer
 from transformers import AutoTokenizer, AutoModel
 from torch.utils.data import Dataset, DataLoader
 from torch.nn.utils.rnn import pad_sequence
-from TorchCRF import CRF # ĐÃ SỬA: Import đúng thư viện CRF (chữ t thường)
+from torchcrf import CRF # ĐÃ SỬA: Import đúng thư viện CRF (chữ t thường)
 import asyncio # Thêm import asyncio
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support
@@ -38,7 +38,7 @@ class FastTextEmbedder:
                 raise FileNotFoundError(f"Could not find FastText model at: {model_path}")
             self.model = fasttext.load_model(model_path)
             self.embedding_dim = self.model.get_word_vector("test").shape[0] 
-            print(f"✅ FastText model loaded from: {model_path} (dim: {self.embedding_dim})")
+            print(f" FastText model loaded from: {model_path} (dim: {self.embedding_dim})")
         except Exception as e:
             raise RuntimeError(f"Error loading FastText model from '{model_path}': {e}. "
                                "Please check the path and FastText library installation.")
@@ -84,7 +84,7 @@ class XLMREmbedder:
             self.model = AutoModel.from_pretrained(model_name)
             self.model.eval()
             self.embedding_dim = self.model.config.hidden_size
-            print(f"✅ XLM-RoBERTa model loaded from: {model_name} (dim: {self.embedding_dim})")
+            print(f" XLM-RoBERTa model loaded from: {model_name} (dim: {self.embedding_dim})")
         except Exception as e:
             raise RuntimeError(f"Error loading XLM-RoBERTa model from '{model_name}': {e}. "
                                "Please check model name or internet connection.")
@@ -535,7 +535,7 @@ async def run_absa_model_training_and_evaluation_pipeline(fused_data_filepath: s
                         comment['embeddings'] = np.array(comment['embeddings']) # Convert list to numpy array
                 all_comments_for_training.extend(video_entry["comments"])
         
-        print(f"✅ Đã tải và trích xuất {len(all_comments_for_training)} bình luận từ {len(fused_data)} video để huấn luyện.")
+        print(f" Đã tải và trích xuất {len(all_comments_for_training)} bình luận từ {len(fused_data)} video để huấn luyện.")
         if not all_comments_for_training:
             print("❌ Không có bình luận nào được trích xuất để huấn luyện. Dừng huấn luyện mô hình.")
             return
